@@ -1,0 +1,5 @@
+\.cvsignore
+\.tar\.gz
+Makefile.old
+blib
+\._
