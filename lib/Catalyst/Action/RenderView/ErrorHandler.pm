@@ -58,6 +58,7 @@ sub handle {
             $c->res->body($body);
             if($h->{actions}) {
                 foreach my $a (@{ $h->{actions} }) {
+                    next unless defined $a;
                     $a->perform($c);
                 }
             }
@@ -109,6 +110,15 @@ sub _parse_actions {
     my $c = shift;
     
     my $actions = shift;
+    unless ($actions and scalar(@$actions)) {
+        # We dont have any actions, lets create a default log action.
+        my $action = {
+            type => 'Log',
+            id => 'default-log-error',
+            level => 'error',
+        };
+        push @$actions, $action;
+    }
     foreach my $action (@$actions) {
         $self->_expand($c, $action );
         my $class;
@@ -137,7 +147,11 @@ sub _parse_handlers {
     my $handlers = shift;
     my $codes = {};
     my $blocks = {};
-    my $fallback = { render => { static => 'root/static/error.html' }, decider => qr/./ };
+    my $fallback = { 
+        render => { static => 'root/static/error.html' }, 
+        decider => qr/./, 
+        actions => [ $self->action('default-log-error') ? $self->action('default-log-error') : undef  ] 
+    };
     foreach my $status (keys %$handlers) {
         my $handler = { 
             actions => [map { $self->action($_) } @{ $handlers->{$status}->{actions}}],
