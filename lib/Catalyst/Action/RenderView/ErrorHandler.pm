@@ -26,10 +26,10 @@ sub execute {
     my $rv = $self->NEXT::execute(@_);
     return 1 unless (scalar(@{ $c->error }) or $c->res->status =~ /^4\d\d/);
     return 1 if ($c->debug);
-    $c->log->debug('We are handeling this request');
-    $c->log->debug($c->debug ? "   debug" : "no debug");
-    $c->log->debug(scalar(@{ $c->error }) ? "   error" : "no error");
-    $c->log->debug($c->res->status =~ /^4\d\d$/ ? "   status" : "no status");
+#    $c->log->debug('We are handeling this request');
+#    $c->log->debug($c->debug ? "   debug" : "no debug");
+#    $c->log->debug(scalar(@{ $c->error }) ? "   error" : "no error");
+#    $c->log->debug($c->res->status =~ /^4\d\d$/ ? "   status" : "no status");
     $self->actions({});
     $self->handlers([]);
     $self->_parse_config($c);
