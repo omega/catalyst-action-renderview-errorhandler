@@ -1,5 +1,8 @@
 Revision history for Catalyst-Action-RenderView-ErrorHandler
 
+0.0101 Tue Jul 17 12:40:00 2007
+    - missing dep for Moose added
+    
 0.0.1  Wed May 16 08:12:55 2007
        Initial release.
 
