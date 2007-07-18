@@ -3,7 +3,7 @@ package Catalyst::Action::RenderView::ErrorHandler;
 use warnings;
 use strict;
 use Carp;
-our $VERSION = '0.0101';
+our $VERSION = '0.0102';
 
 use Class::Inspector;
 

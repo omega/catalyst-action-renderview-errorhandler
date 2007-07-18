@@ -7,6 +7,8 @@ build_requires 'Test::More';
 
 requires 'Catalyst::Action::RenderView';
 requires 'Moose';
+requires 'Catalyst::View::TT';
+requires 'Class::Inspector';
 
 auto_install;
 
