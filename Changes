@@ -1,5 +1,8 @@
 Revision history for Catalyst-Action-RenderView-ErrorHandler
 
+0.0103 Fri Jul 20 09:43:00 2007
+    - missing build dep of Text::Diff added
+
 0.0102 Wed Jul 18 12:49:00 2007
     - missing dep for Catalyst::View::TT and Class Inspector added
     

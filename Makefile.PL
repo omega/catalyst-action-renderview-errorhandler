@@ -4,6 +4,7 @@ name 'Catalyst-Action-RenderView-ErrorHandler';
 all_from 'lib/Catalyst/Action/RenderView/ErrorHandler.pm';
 
 build_requires 'Test::More';
+build_requires 'Text::Diff';
 
 requires 'Catalyst::Action::RenderView';
 requires 'Moose';
