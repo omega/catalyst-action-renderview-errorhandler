@@ -5,6 +5,9 @@ all_from 'lib/Catalyst/Action/RenderView/ErrorHandler.pm';
 
 build_requires 'Test::More';
 build_requires 'Text::Diff';
+build_requires 'FindBin';
+build_requires 'Catalyst::Runtime';
+build_requires 'HTTP::Request';
 
 requires 'Catalyst::Action::RenderView';
 requires 'Moose';
