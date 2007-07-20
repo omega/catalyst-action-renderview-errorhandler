@@ -1,4 +1,6 @@
 Revision history for Catalyst-Action-RenderView-ErrorHandler
+0.0104 Fri Jul 20 09:46:00 2007
+    - Bad upload
 
 0.0103 Fri Jul 20 09:43:00 2007
     - missing build dep of Text::Diff added
