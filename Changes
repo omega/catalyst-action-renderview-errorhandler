@@ -1,4 +1,8 @@
 Revision history for Catalyst-Action-RenderView-ErrorHandler
+0.0105 Mon Aug 20 09:31:00 2007
+    - Set a version requirement for Catalyst::View::TT 
+      to make sure tests pass
+      
 0.0104 Fri Jul 20 09:46:00 2007
     - Bad upload
 

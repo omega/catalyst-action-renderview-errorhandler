@@ -11,7 +11,7 @@ build_requires 'HTTP::Request';
 
 requires 'Catalyst::Action::RenderView';
 requires 'Moose';
-requires 'Catalyst::View::TT';
+requires 'Catalyst::View::TT' => '0.25';
 requires 'Class::Inspector';
 
 auto_install;
