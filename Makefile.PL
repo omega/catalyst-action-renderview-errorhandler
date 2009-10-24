@@ -13,6 +13,7 @@ requires 'Catalyst::Action::RenderView';
 requires 'Moose';
 requires 'Catalyst::View::TT' => '0.25';
 requires 'Class::Inspector';
+requires 'MRO::Compat';
 
 auto_install;
 

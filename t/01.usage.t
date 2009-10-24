@@ -74,7 +74,7 @@ sub run_tests {
     {
         my $expected = qq{500 error happened
 
-* Caught exception in TestApp->test_die "Death by action at $root/lib/TestApp.pm line 33."
+* Caught exception in TestApp::Controller::Root->test_die "Death by action at $root/lib/TestApp/Controller/Root.pm line 15."
 };
         my $request  =
           HTTP::Request->new( GET => 'http://localhost:3000/test_die' );
@@ -86,14 +86,16 @@ sub run_tests {
         my $content = $response->content;
         
         is( $response->content, $expected, 'Content OK' );
-        is( $stderr, '[error] Caught exception in TestApp->test_die "Death by action at ' . $root . '/lib/TestApp.pm line 33."' . "\n");
+        is( $stderr, '[error] Caught exception in TestApp::Controller::Root->test_die "Death by action at ' 
+            . $root . '/lib/TestApp/Controller/Root.pm line 15."' . "\n"
+        );
     }
     reset_stderr();    
     # lets test a dying view
     {
         my $expected = qq{5xx error happened
 
-* Caught exception in TestApp::View::Default->process "Death by view at $root/lib/TestApp/View/Default.pm line 9."
+* Caught exception in TestApp::View::Default->process "Death by view at $root/lib/TestApp/View/Default.pm line 13."
 };
         my $request  =
           HTTP::Request->new( GET => 'http://localhost:3000/test_view_death' );

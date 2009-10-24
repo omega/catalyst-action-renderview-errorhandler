@@ -3,6 +3,8 @@ package Catalyst::Action::RenderView::ErrorHandler;
 use warnings;
 use strict;
 use Carp;
+use MRO::Compat;
+
 our $VERSION = '0.0105';
 
 use Class::Inspector;
@@ -23,7 +25,7 @@ sub execute {
     my $self = shift;
     my ($controller, $c) = @_;
     
-    my $rv = $self->NEXT::execute(@_);
+    my $rv = $self->maybe::next::method(@_);
     return 1 unless (scalar(@{ $c->error }) or $c->res->status =~ /^4\d\d/);
     return 1 if ($c->debug);
     $self->actions({});

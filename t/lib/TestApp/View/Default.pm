@@ -1,5 +1,9 @@
 package TestApp::View::Default;
 
+use MRO::Compat;
+use warnings;
+use strict;
+
 use base qw( Catalyst::View::TT );
 
 sub process {
@@ -10,7 +14,7 @@ sub process {
         
     }
     
-    $self->NEXT::process($c);
+    $self->maybe::next::method($c);
 }
 
 1;
