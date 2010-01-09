@@ -1,4 +1,5 @@
 package Catalyst::Action::RenderView::ErrorHandler::Action::Log;
+#ABSTRACT: A logging action for errors.
 
 use strict;
 use warnings;
@@ -21,10 +22,6 @@ sub perform {
 1;
 
 __END__
-
-=head1 NAME
-
-Catalyst::Action::RenderView::ErrorHandler::Action::Log
 
 =head1 DESCRIPTION
 
@@ -72,8 +69,4 @@ every error.
 =head3 meta
 
 Inherited from Moose.
-
-=head1 AUTHOR
-
-Andreas Marienborg C<<andreas@startsiden.no>>
 

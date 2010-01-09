@@ -1,4 +1,5 @@
 package Catalyst::Action::RenderView::ErrorHandler::Action;
+#ABSTRACT: A Role for any actions that want to react to errors.
 
 use strict;
 use warnings;
@@ -11,10 +12,6 @@ requires 'perform';
 1;
 
 __END__
-
-=head1 NAME
-
-Catalyst::Action::RenderView::ErrorHandler::Action
 
 =head1 DESCRIPTION
 
@@ -49,9 +46,4 @@ email or whatnot
 =head3 meta
 
 Inherited from L<Moose>
-
-=head1 AUTHOR
-
-Andreas Marienborg C<<andreas@startsiden.no>>
-
 
