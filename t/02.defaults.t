@@ -83,7 +83,9 @@ sub run_tests {
         my $content = $response->content;
         
         is( $response->content, $expected, 'Content OK' );
-        is( $stderr, '[error] Caught exception in TestApp2::Controller::Root->test_die "Death by action at ' . $root . '/lib/TestApp2/Controller/Root.pm line 15."' . "\n");
+        like( $stderr, 
+            qr|\[error\] Caught exception in TestApp2::Controller::Root->test_die "Death by action at .*/lib/TestApp2/Controller/Root.pm line \d+."|s
+        );
     }
     reset_stderr();    
     # lets test a dying view    

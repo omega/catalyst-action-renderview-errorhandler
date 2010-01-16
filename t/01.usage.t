@@ -45,9 +45,9 @@ open(STDERR, ">&SAVEERR");
 
 sub reset_stderr {
     close STDERR or print "cannot close STDERR\n";
-    print "Current stderr: " . $stderr . "\n";
+    print "# Current stderr: " . $stderr . "\n";
     $stderr = '';
-    open(STDERR, ">", \$stderr) or print "CAnnot open: $!\n";
+    open(STDERR, ">", \$stderr) or print "# Cannot open: $!\n";
 }
 
 sub run_tests {
@@ -72,10 +72,7 @@ sub run_tests {
     reset_stderr();    
     # Lets test a dying action
     {
-        my $expected = qq{500 error happened
-
-* Caught exception in TestApp::Controller::Root->test_die "Death by action at $root/lib/TestApp/Controller/Root.pm line 15."
-};
+        my $expected = qr|500 error happened.*"Death by action at .*/lib/TestApp/Controller/Root.pm line \d+."|s;
         my $request  =
           HTTP::Request->new( GET => 'http://localhost:3000/test_die' );
 
@@ -85,18 +82,16 @@ sub run_tests {
         is( $response->code, 500, 'Response Code' );
         my $content = $response->content;
         
-        is( $response->content, $expected, 'Content OK' );
-        is( $stderr, '[error] Caught exception in TestApp::Controller::Root->test_die "Death by action at ' 
-            . $root . '/lib/TestApp/Controller/Root.pm line 15."' . "\n"
+        like( $response->content, $expected, 'Content OK' );
+        like( $stderr, 
+            qr|\[error\] Caught exception in TestApp::Controller::Root->test_die "Death by action at .*/lib/TestApp/Controller/Root.pm line \d+."|s
         );
     }
     reset_stderr();    
     # lets test a dying view
     {
-        my $expected = qq{5xx error happened
-
-* Caught exception in TestApp::View::Default->process "Death by view at $root/lib/TestApp/View/Default.pm line 13."
-};
+        my $expected = qr|5xx error happened.*"Death by view at .*/lib/TestApp/View/Default.pm line \d+."|s;
+        
         my $request  =
           HTTP::Request->new( GET => 'http://localhost:3000/test_view_death' );
 
@@ -105,7 +100,7 @@ sub run_tests {
         is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
         is( $response->code, 501, 'Response Code' );
 
-        is( $response->content, $expected, 'Content OK' );
+        like( $response->content, $expected, 'Content OK' );
         is( $stderr, '', "5xx erros should not be logged");
     }
     reset_stderr();    
