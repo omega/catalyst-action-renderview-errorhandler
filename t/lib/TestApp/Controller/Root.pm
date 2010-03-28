@@ -21,6 +21,10 @@ sub test_view_death : Global {
 }
 sub test_4xx : Global {
     my ( $self, $c ) = @_;
+    $c->res->status(401);
+}
+sub test_404 : Global {
+    my ( $self, $c ) = @_;
     $c->res->status(404);
 }
 sub end : ActionClass('RenderView::ErrorHandler') {}

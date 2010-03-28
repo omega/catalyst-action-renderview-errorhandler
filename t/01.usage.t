@@ -6,7 +6,7 @@ use warnings;
 use FindBin;
 use lib "$FindBin::Bin/lib";
 
-use Test::More tests => 25;
+use Test::More tests => 30;
 use Catalyst::Test 'TestApp';
 
 use Text::Diff;
@@ -104,6 +104,22 @@ sub run_tests {
         is( $stderr, '', "5xx erros should not be logged");
     }
     reset_stderr();    
+
+    {
+        my $expected = '404 File not found';
+        my $request  =
+          HTTP::Request->new( GET => 'http://localhost:3000/test_404' );
+
+        ok( my $response = request($request), 'Request' );
+        ok( ! $response->is_success, 'Response Successful 2xx' );
+        is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
+        is( $response->code, 404, 'Response Code' );
+
+        is( $response->content, $expected, 'Content OK' );
+        #is( $stderr, '[error] Couldn\'t render template "file error - test_4xx: not found"' . "\n", "we cannot render the template");
+        
+    }
+    reset_stderr();    
     
     # lets try a 4xx error to test fallback
     {
@@ -114,7 +130,7 @@ sub run_tests {
         ok( my $response = request($request), 'Request' );
         ok( ! $response->is_success, 'Response Successful 2xx' );
         is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
-        is( $response->code, 404, 'Response Code' );
+        is( $response->code, 401, 'Response Code' );
 
         is( $response->content, $expected, 'Content OK' );
         is( $stderr, '[error] Couldn\'t render template "file error - test_4xx: not found"' . "\n", "we cannot render the template");

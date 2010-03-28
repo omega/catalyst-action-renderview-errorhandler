@@ -18,6 +18,7 @@ error_handler => {
     handlers => {
         '5xx' => { template => 'error/5xx',  },
         '500' => { template => 'error/500', actions => [qw(log-server)]},
+        '400' => { template => 'error/404' },
     },
 });
 
