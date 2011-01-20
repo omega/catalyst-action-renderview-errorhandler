@@ -1,4 +1,6 @@
 {{$NEXT}}
+    - Fix a problem with + to load fully namespaced stuff
+      [Philip Karlsson]
 
 0.100160  2010-01-16 06:50:51 Europe/Oslo
     - Fixing the last release, which was utterly broken.
