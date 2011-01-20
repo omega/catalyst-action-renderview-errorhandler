@@ -125,6 +125,7 @@ sub _parse_actions {
         my $class;
         if ($action->{'type'} and $action->{'type'} =~ /^\+/) {
             $class = $action->{'type'};
+            $class =~ s/^\+//;
         } elsif($action->{'type'}) {
             $class = ref($self) . "::Action::" . $action->{'type'};
         } else {
