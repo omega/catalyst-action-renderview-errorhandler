@@ -6,7 +6,7 @@ use Catalyst;
 our $VERSION = '0.01';
 use FindBin;
 
-TestApp->config( name => 'TestApp', root => "$FindBin::Bin/lib/TestApp/root", 
+TestApp->config( name => 'TestApp', root => "$FindBin::Bin/lib/TestApp/root",
 error_handler => {
     actions => [
         {
