@@ -12,7 +12,7 @@ has 'level' => (is => 'ro', isa => 'Str', default => 'error');
 sub perform {
     my $self = shift;
     my $c = shift;
-    
+
     my $level = $self->level;
     foreach my $e (@{ $c->error }) {
         $c->log->$level($e);
@@ -61,7 +61,7 @@ The log-level this action uses.
 
 Implemented as a requirement of L<Catalyst::Action::RenderView::ErrorHandler::Action>.
 
-Will be called with the $context, and basicly calles $context->log->$level for
+Will be called with the C<$context>, and basicly calles C<< $context->log->$level >> for
 every error.
 
 =head2 INHERITED METHODS

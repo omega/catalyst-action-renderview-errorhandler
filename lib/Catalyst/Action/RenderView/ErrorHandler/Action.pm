@@ -20,7 +20,7 @@ A Role that should be consumed by actions that are implemented
 =head1 SYNOPSIS
 
     use Moose;
-    
+
     with 'Catalyst::Action::RenderView::ErrorHandler::Action';
 
 =head1 INTERFACE
@@ -37,8 +37,8 @@ This is the ID which you can refer to when defining handlers
 
 This method need to be implemented by consuming classes.
 
-It will be called with $context, and thus makes it possible
-to access $context->errors for instance, include them in an
+It will be called with C<$context>, and thus makes it possible
+to access C<< $context->errors >> for instance, include them in an
 email or whatnot
 
 =head2 INHERITED METHODS
