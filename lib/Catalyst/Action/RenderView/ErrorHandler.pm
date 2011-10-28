@@ -235,6 +235,11 @@ action.
 Is an array of actions you want taken. Each value should be an hashref
 with atleast the following keys:
 
+=head3 enable
+
+If this is true, we will act even in debug mode. Great for getting debug logs AND
+error-handler templates rendered.
+
 =head4 type
 
 Can be Log for builtin, or you can prefix it with a +, then
@@ -353,6 +358,16 @@ L<Catalyst::Action::RenderView>
 =over 4
 
 =item L<Catalyst::Action::RenderView::ErrorHandler::Action::Email>
+
+=back
+
+=head1 Thanks
+
+=over 4
+
+=item zdk L<https://github.com/zdk>
+
+=item Stefan Profanter L<https://metacpan.org/author/PROFANTER>
 
 =back
 

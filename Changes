@@ -3,6 +3,9 @@
     - Some POD cleanup
     - Link to C:A:RV:ErrorHandler::Action::Email by [Stefan
       Profanter]
+    - Add a enable config option, to override the debug check
+      [zdk]
+
 0.100161  2011-01-20 09:12:41 Europe/Oslo
     - Fix a problem with + to load fully namespaced stuff
       [Philip Karlsson]
