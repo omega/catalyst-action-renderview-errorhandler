@@ -26,7 +26,7 @@ sub execute {
 
     my $rv = $self->maybe::next::method(@_);
     return 1 unless (scalar(@{ $c->error }) or $c->res->status =~ /^4\d\d/);
-    return 1 if ($c->debug);
+    return 1 if ($c->debug and !$c->config->{'error_handler'}->{'enable'});
     $self->actions({});
     $self->handlers([]);
     $self->_parse_config($c);
