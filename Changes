@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+0.100165  2011-10-29 21:44:00 Europe/Berlin
+
+    - Added Version to Action and Log
+
 0.100163  2011-10-29 21:18:00 Europe/Berlin
 
     - Added ignorePath option

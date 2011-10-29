@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use Moose::Role;
 
+our $VERSION = '0.100165';
+
 has 'id' => (is => 'ro', isa => 'Str', required => 1);
 has 'ignorePath' => (is => 'ro', isa => 'Str', required => 0);
 

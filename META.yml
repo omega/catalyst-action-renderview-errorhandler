@@ -34,7 +34,7 @@ requires:
   warnings: 0
 resources:
   repository: git://github.com/omega/catalyst-action-renderview-errorhandler.git
-version: 0.100164
+version: 0.100165
 x_Dist_Zilla:
   plugins:
     -
