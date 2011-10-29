@@ -10,7 +10,7 @@ use Class::Inspector;
 
 use Moose;
 
-our $VERSION = '0.100163';
+our $VERSION = '0.100164';
 
 extends 'Catalyst::Action::RenderView';
 
