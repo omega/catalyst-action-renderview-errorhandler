@@ -10,6 +10,8 @@ use Class::Inspector;
 
 use Moose;
 
+our $VERSION = '0.100163';
+
 extends 'Catalyst::Action::RenderView';
 
 has 'handlers' => (is => 'rw', isa => 'ArrayRef', default => sub { [] });
@@ -59,12 +61,12 @@ sub handle {
             $c->res->body($body);
             if($h->{actions}) {
                 foreach my $a (@{ $h->{actions} }) {
+		    next unless defined $a;
 		    my $regex = $a->{ignorePath};
-                    next unless (defined $a && (
-			!defined $a->{ignorePath} || 
-				( defined $regex && !($c->request->path =~ m/$regex/gi))
-		    	)
-		    );
+		    if (defined $regex && $c->request->path =~ m|$regex|gi)
+		    {
+			next;
+		    }
                     $a->perform($c);
                 }
             }
@@ -264,7 +266,7 @@ Optional.
 If this Regex matches $c->request->path nothing will be logged. Useful if you want ot exclude a
 request path from logging/emailing a 404 error (eg. there are some bad hackers who try to break
 into your system by searching PhpMyAdmin. If you don't use it, you can exclude it and you get no mails).
-The regex is used with ignore-case.
+The regex is used with ignore-case and the delimiter is '|'
 
 =head3 handlers
 
