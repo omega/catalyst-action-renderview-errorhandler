@@ -86,7 +86,7 @@ sub render {
         # We try to render it using the view, but will catch errors we hope
         my $content;
         eval {
-            $content = $c->view->render($c, $args->{template}, { additional_template_paths => [ $c->path_to('root') ]});
+            $content = $c->view->render( $c, $args->{template} );
         };
         unless ($@) {
             return $content;
