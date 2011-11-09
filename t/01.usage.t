@@ -6,7 +6,7 @@ use warnings;
 use FindBin;
 use lib "$FindBin::Bin/lib";
 
-use Test::More tests => 30;
+use Test::More tests => 31;
 use Catalyst::Test 'TestApp';
 
 use Text::Diff;
@@ -132,8 +132,8 @@ sub run_tests {
         ok( ! $response->is_success, 'Response Successful 2xx' );
         is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
         is( $response->code, 404, 'Response Code' );
-
         is( $response->content, $expected, 'Content OK' );
+        is( $stderr, '[error] Couldn\'t render template "file error - test_404: not found"' . "\n", "we cannot render the template");
     }
     reset_stderr();
 }
