@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+0.100163  2011-10-29 21:18:00 Europe/Berlin
+
+    - Added ignorePath option
+
 0.100162  2011-10-29 00:31:50 Europe/Oslo
 
     - Some POD cleanup

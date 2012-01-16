@@ -10,6 +10,8 @@ use Class::Inspector;
 
 use Moose;
 
+our $VERSION = '0.100164';
+
 extends 'Catalyst::Action::RenderView';
 
 has 'handlers' => (is => 'rw', isa => 'ArrayRef', default => sub { [] });
@@ -59,7 +61,12 @@ sub handle {
             $c->res->body($body);
             if($h->{actions}) {
                 foreach my $a (@{ $h->{actions} }) {
-                    next unless defined $a;
+		    next unless defined $a;
+		    my $regex = $a->{ignorePath};
+		    if (defined $regex && $c->request->path =~ m|$regex|gi)
+		    {
+			next;
+		    }
                     $a->perform($c);
                 }
             }
@@ -230,15 +237,15 @@ action.
 
 =head2 OPTIONS
 
-=head3 actions
-
-Is an array of actions you want taken. Each value should be an hashref
-with atleast the following keys:
-
 =head3 enable
 
 If this is true, we will act even in debug mode. Great for getting debug logs AND
 error-handler templates rendered.
+
+=head3 actions
+
+Is an array of actions you want taken. Each value should be an hashref
+with atleast the following keys:
 
 =head4 type
 
@@ -252,6 +259,14 @@ templated emails on errors.
 =head4 id
 
 The id you want to have for this action
+
+=head4 ignorePath
+
+Optional.
+If this Regex matches $c->request->path nothing will be logged. Useful if you want ot exclude a
+request path from logging/emailing a 404 error (eg. there are some bad hackers who try to break
+into your system by searching PhpMyAdmin. If you don't use it, you can exclude it and you get no mails).
+The regex is used with ignore-case and the delimiter is '|'
 
 =head3 handlers
 
@@ -295,6 +310,7 @@ absolute path to read from.
             # you want to send email from an action
             - type: Email
               id: email-devel
+              ignorePath: '(PhpMyAdmin|SqlDump)'
               to: andreas@example.com
               subject: __MYAPP__ errors:
             - type: Log
