@@ -6,6 +6,7 @@ use warnings;
 use Moose::Role;
 
 has 'id' => (is => 'ro', isa => 'Str', required => 1);
+has 'ignorePath' => (is => 'ro', isa => 'Str', required => 0);
 
 requires 'perform';
 
