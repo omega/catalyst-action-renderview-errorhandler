@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use Moose;
 
+our $VERSION = '0.100165';
+
 with 'Catalyst::Action::RenderView::ErrorHandler::Action';
 has 'level' => (is => 'ro', isa => 'Str', default => 'error');
 
