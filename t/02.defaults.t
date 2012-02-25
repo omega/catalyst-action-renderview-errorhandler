@@ -96,7 +96,6 @@ sub run_tests {
           HTTP::Request->new( GET => 'http://localhost:3000/test_404' );
 
         ok( my $response = request($request), 'Request' );
-        # diag( $response->content );
         ok( ! $response->is_success, 'Response Successful 2xx' );
         is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
         is( $response->code, 404, 'Response Code' );
