@@ -27,7 +27,8 @@ sub test_4xx : Global {
 
 sub test_404 : Global {
     my ( $self, $c ) = @_;
-    $c->stash->{'st'} = qq{Page not found};
+    $c->stash->{'key'}   = qq{Page not found};
+    $c->stash->{'other'} = qq{555};
     $c->res->status(404);
 }
 

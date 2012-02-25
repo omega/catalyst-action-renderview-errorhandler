@@ -85,8 +85,10 @@ sub render {
     } elsif ($args->{template}) {
         # We try to render it using the view, but will catch errors we hope
         my $content;
+        my %data = $self->_render_stash( $c );
+        $data{additional_template_paths} ||= [ $c->path_to('root') ]; #compatible w/ earlier version
         eval {
-            $content = $c->view->render( $c, $args->{template} );
+            $content = $c->view->render( $c, $args->{template}, \%data );
         };
         unless ($@) {
             return $content;
@@ -97,6 +99,21 @@ sub render {
         croak "Error rendering - no template or static";
     }
 }
+
+=head2 _render_stash
+  return a list of rendering data in template from exposed stash
+=cut
+sub _render_stash {
+    my $self = shift;
+    my $c    = shift;
+    return () if !exists $c->config->{'error_handler'}->{'expose_stash'};
+    my $es = $c->config->{'error_handler'}->{'expose_stash'};
+    return map { $_ =~ $es ? ($_ => $c->stash->{$_}) : () } keys %{$c->stash}
+             if ( ref($es) eq 'Regexp' );
+    return map { $_ => $c->stash->{$_} } @{$es} if ( ref($es) eq 'ARRAY' );
+    return ( $es => $c->stash->{$es} ) if ( !ref($es) );
+}
+
 sub _parse_config {
     my $self = shift;
     my $c = shift;

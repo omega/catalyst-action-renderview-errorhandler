@@ -20,6 +20,7 @@ error_handler => {
         '5xx' => { template => 'error/5xx', },
         '500' => { template => 'error/500', actions => [qw(log-server)]},
     },
+    expose_stash => 'key',
 });
 
 TestApp->setup;
