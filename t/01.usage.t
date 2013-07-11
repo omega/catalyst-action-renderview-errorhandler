@@ -6,7 +6,7 @@ use warnings;
 use FindBin;
 use lib "$FindBin::Bin/lib";
 
-use Test::More tests => 25;
+use Test::More tests => 27;
 use Catalyst::Test 'TestApp';
 
 use Text::Diff;
@@ -122,5 +122,12 @@ sub run_tests {
     }
     reset_stderr();    
     
-    
+    # lets check if die supersedes redirect
+    {
+        my $request = HTTP::Request->
+            new( GET => 'http://localhost:3000/test_redirect_then_die' );
+        ok( my $response = request($request), 'Request' );
+        is( $response->code, 500, 'Should be internal server error');
+    }
+    reset_stderr(); 
 }
