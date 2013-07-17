@@ -22,9 +22,11 @@ error_handler => {
         },
     ],
     handlers => {
+        '404' => { template => 'error/404', },
         '5xx' => { template => 'error/5xx',  },
         '500' => { template => 'error/500', actions => [qw(log-server log-ignore-some)]},
     },
+    expose_stash => 'key',
 });
 
 TestApp->setup;

@@ -6,7 +6,7 @@ use warnings;
 use FindBin;
 use lib "$FindBin::Bin/lib";
 
-use Test::More tests => 13;
+use Test::More tests => 19;
 use Catalyst::Test 'TestApp2';
 
 use Text::Diff;
@@ -68,7 +68,7 @@ sub run_tests {
         is($response->content, $expected, 'Content OK' );
         is( $stderr, '', "No stderr output");
     }
-    
+
     reset_stderr();    
     # Lets test a dying action
     {
@@ -88,6 +88,20 @@ sub run_tests {
         );
     }
     reset_stderr();    
-    # lets test a dying view    
-    
+
+    # lets try a 404 error to render template
+    {
+        my $expected = qq{Page not found};
+        my $request  =
+          HTTP::Request->new( GET => 'http://localhost:3000/test_404' );
+
+        ok( my $response = request($request), 'Request' );
+        ok( ! $response->is_success, 'Response Successful 2xx' );
+        is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
+        is( $response->code, 404, 'Response Code' );
+        is( $response->content, $expected, 'Content OK' );
+        is( $stderr, '[error] Couldn\'t render template "file error - test_404: not found"' . "\n", "we cannot render the template");
+    }
+    reset_stderr();
+
 }

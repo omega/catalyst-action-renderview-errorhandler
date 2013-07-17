@@ -114,7 +114,7 @@ sub run_tests {
         ok( my $response = request($request), 'Request' );
         ok( ! $response->is_success, 'Response Successful 2xx' );
         is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
-        is( $response->code, 404, 'Response Code' );
+        is( $response->code, 401, 'Response Code' );
 
         is( $response->content, $expected, 'Content OK' );
         is( $stderr, '[error] Couldn\'t render template "file error - test_4xx: not found"' . "\n", "we cannot render the template");
@@ -122,7 +122,20 @@ sub run_tests {
     }
     reset_stderr();
 
+    # lets try a 404 error to render template
+    {
+        my $expected = qq{Page not found};
+        my $request  =
+          HTTP::Request->new( GET => 'http://localhost:3000/test_404' );
 
+        ok( my $response = request($request), 'Request' );
+        ok( ! $response->is_success, 'Response Successful 2xx' );
+        is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
+        is( $response->code, 404, 'Response Code' );
+        is( $response->content, $expected, 'Content OK' );
+        is( $stderr, '[error] Couldn\'t render template "file error - test_404: not found"' . "\n", "we cannot render the template");
+    }
+    reset_stderr();
 }
 
 done_testing();

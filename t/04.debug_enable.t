@@ -79,7 +79,22 @@ sub run_tests {
         isnt( $stderr, '[error] Caught exception in TestApp4->test_die "Death by action at ' . $root . '/lib/TestApp4.pm line 20."' . "\n");
     }
     reset_stderr();
-    # render template as configured
+
+    # lets try a 404 error to render template
+    {
+      my $expected = qq{Page not found};
+      my $request  =
+        HTTP::Request->new( GET => 'http://localhost:3000/test_404' );
+
+      ok( my $response = request($request), 'Request' );
+      ok( ! $response->is_success, 'Response Successful 2xx' );
+      is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
+      is( $response->code, 404, 'Response Code' );
+      is( $response->content, $expected, 'Content OK' );
+      like( $stderr, qr|\[error\] Couldn\'t render template "file error - test_404: not found| );
+
+    }
+    reset_stderr();
 
 }
 
