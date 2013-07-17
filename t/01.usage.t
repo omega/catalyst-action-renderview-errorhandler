@@ -6,7 +6,7 @@ use warnings;
 use FindBin;
 use lib "$FindBin::Bin/lib";
 
-use Test::More tests => 25;
+use Test::More;
 use Catalyst::Test 'TestApp';
 
 use Text::Diff;
@@ -83,8 +83,8 @@ sub run_tests {
         my $content = $response->content;
         
         like( $response->content, $expected, 'Content OK' );
-        like( $stderr, 
-            qr|\[error\] Caught exception in TestApp::Controller::Root->test_die "Death by action at .*/lib/TestApp/Controller/Root.pm line \d+."|s
+        like( $stderr,
+            qr|^\[error\] Caught exception in TestApp::Controller::Root->test_die "Death by action at [^\n]*/lib/TestApp/Controller/Root\.pm line \d+\."$|s
         );
     }
     reset_stderr();    
@@ -124,3 +124,5 @@ sub run_tests {
     
     
 }
+
+done_testing();

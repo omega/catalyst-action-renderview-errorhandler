@@ -60,6 +60,7 @@ sub handle {
             if($h->{actions}) {
                 foreach my $a (@{ $h->{actions} }) {
                     next unless defined $a;
+                    next if $a->ignore($c->req->path);
                     $a->perform($c);
                 }
             }
@@ -235,10 +236,16 @@ action.
 Is an array of actions you want taken. Each value should be an hashref
 with atleast the following keys:
 
-=head3 enable
+=head4 enable
 
 If this is true, we will act even in debug mode. Great for getting debug logs AND
 error-handler templates rendered.
+
+=head4 ignorePath (Optional)
+
+If this regex matches C<< $c->req->path >>, the action will be skipped. Useful
+if you want to exclude some paths from triggering emails for instance. Can be
+used to ignore hacking attempts against PhpMyAdmin and such.
 
 =head4 type
 

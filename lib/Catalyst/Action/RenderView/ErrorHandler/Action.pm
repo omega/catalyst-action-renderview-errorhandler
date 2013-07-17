@@ -5,7 +5,44 @@ use strict;
 use warnings;
 use Moose::Role;
 
+=attr id
+
+Unique name for this action. It is used when refering actions from handlers
+
+=cut
+
 has 'id' => (is => 'ro', isa => 'Str', required => 1);
+
+=attr ignore_path
+
+This allows you to set a regexp that we match against the request path. It
+comes in handy if your server is targeted by some php exploit nastyness, and
+you don't want to (for instance) email everyone every time someone tries to
+bruteforce.
+
+=cut
+
+has 'ignore_path' => (
+    is => 'ro',
+    isa => 'Str',
+    required => 0,
+    init_arg => 'ignorePath',
+    predicate => 'has_ignore_path',
+);
+
+=method ignore $path
+
+Called before the action is performed to check if we should ignore this action this time or not. Returns true if the action should be ignored (skipped)
+
+=cut
+
+sub ignore {
+    my ( $self, $path ) = @_;
+    return unless $self->has_ignore_path;
+    my $re = $self->ignore_path;
+    $re = qr/\Q$re\E/;
+    return $path =~ m/$re/;
+}
 
 requires 'perform';
 
@@ -22,14 +59,6 @@ A Role that should be consumed by actions that are implemented
     use Moose;
 
     with 'Catalyst::Action::RenderView::ErrorHandler::Action';
-
-=head1 INTERFACE
-
-=head2 ACCESSORS
-
-=head3 id
-
-This is the ID which you can refer to when defining handlers
 
 =head2 REQUIRED METHODS
 

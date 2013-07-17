@@ -13,11 +13,17 @@ error_handler => {
             type => 'Log',
             id => 'log-server',
             level => 'error',
-        }
+        },
+        {
+            type => 'Log',
+            id => 'log-ignore-some',
+            level => 'error',
+            ignorePath => 'test_die',
+        },
     ],
     handlers => {
         '5xx' => { template => 'error/5xx',  },
-        '500' => { template => 'error/500', actions => [qw(log-server)]},
+        '500' => { template => 'error/500', actions => [qw(log-server log-ignore-some)]},
     },
 });
 
