@@ -33,7 +33,7 @@ BEGIN {
 #local $SIG{__DIE__} = sub {
 #close STDERR;
 #open(STDERR, ">&SAVEERR");
-#print $stderr . "\n";   
+#print $stderr . "\n";
 #};
 open(SAVEERR, ">&STDERR");
 close STDERR or print "cannot close STDERR\n";
@@ -68,8 +68,8 @@ sub run_tests {
         is($response->content, $expected, 'Content OK' );
         is( $stderr, '', "No stderr output");
     }
-    
-    reset_stderr();    
+
+    reset_stderr();
     # Lets test a dying action
     {
         my $expected = qr|500 error happened.*"Death by action at .*/lib/TestApp/Controller/Root.pm line \d+."|s;
@@ -81,17 +81,17 @@ sub run_tests {
         is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
         is( $response->code, 500, 'Response Code' );
         my $content = $response->content;
-        
+
         like( $response->content, $expected, 'Content OK' );
         like( $stderr,
             qr|^\[error\] Caught exception in TestApp::Controller::Root->test_die "Death by action at [^\n]*/lib/TestApp/Controller/Root\.pm line \d+\."$|s
         );
     }
-    reset_stderr();    
+    reset_stderr();
     # lets test a dying view
     {
         my $expected = qr|5xx error happened.*"Death by view at .*/lib/TestApp/View/Default.pm line \d+."|s;
-        
+
         my $request  =
           HTTP::Request->new( GET => 'http://localhost:3000/test_view_death' );
 
@@ -103,8 +103,8 @@ sub run_tests {
         like( $response->content, $expected, 'Content OK' );
         is( $stderr, '', "5xx erros should not be logged");
     }
-    reset_stderr();    
-    
+    reset_stderr();
+
     # lets try a 4xx error to test fallback
     {
         my $expected = 'Something awfull happened';
@@ -118,11 +118,11 @@ sub run_tests {
 
         is( $response->content, $expected, 'Content OK' );
         is( $stderr, '[error] Couldn\'t render template "file error - test_4xx: not found"' . "\n", "we cannot render the template");
-        
+
     }
-    reset_stderr();    
-    
-    
+    reset_stderr();
+
+
 }
 
 done_testing();
