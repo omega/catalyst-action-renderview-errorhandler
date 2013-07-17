@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+    - Re-implemented ignorePath and added a test for it working.
+
 0.100165  2011-10-29 21:44:00 Europe/Berlin
 
     - Added Version to Action and Log
