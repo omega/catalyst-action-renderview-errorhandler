@@ -38,7 +38,8 @@ sub handle {
     my $c = shift;
 
     my $code = $c->res->status;
-    if ($code == 200 and scalar(@{ $c->error })) {
+    my $has_errors = scalar( @{ $c->error } );
+    if ($code == 200 and $has_errors) {
         $code = 500; # We default to 500 for errors unless something else has been set.
         $c->res->status($code);
     }
@@ -69,6 +70,9 @@ sub handle {
             # We have some actions to perform
             last ;
         }
+    }
+    if ($has_errors and $code =~ m/[23]\d{2}/) {
+        $c->res->status(500); # We overwrite 2xx and 3xx with 500 if we had errors
     }
 }
 sub render {
