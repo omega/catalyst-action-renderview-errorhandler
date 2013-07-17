@@ -136,6 +136,14 @@ sub run_tests {
         is( $stderr, '[error] Couldn\'t render template "file error - test_404: not found"' . "\n", "we cannot render the template");
     }
     reset_stderr();
+    # lets check if die supersedes redirect
+    {
+        my $request = HTTP::Request->
+            new( GET => 'http://localhost:3000/test_redirect_then_die' );
+        ok( my $response = request($request), 'Request' );
+        is( $response->code, 500, 'Should be internal server error');
+    }
+    reset_stderr();
 }
 
 done_testing();

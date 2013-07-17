@@ -32,6 +32,11 @@ sub test_404 : Global {
     $c->res->status(404);
 }
 
+sub test_redirect_then_die : Global {
+    my ( $self, $c ) = @_;
+    $c->res->redirect($c->uri_for('/'));
+    die "Death by action";
+}
 sub end : ActionClass('RenderView::ErrorHandler') {}
 
 
