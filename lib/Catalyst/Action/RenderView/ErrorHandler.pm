@@ -101,9 +101,7 @@ sub render {
     }
 }
 
-=head2 _render_stash
-  return a list of rendering data in template from exposed stash
-=cut
+
 sub _render_stash {
     my $self = shift;
     my $c    = shift;
@@ -277,6 +275,13 @@ templated emails on errors.
 
 The id you want to have for this action
 
+=head4 expose_stash
+
+Either a list of keys, a regexp for matching keys, or a simple string to denote
+a single stash value.
+
+stash keys that match will be available to template handlers
+
 =head3 handlers
 
 Configuration as to what to do when an error occurs. We always need
@@ -366,6 +371,12 @@ templates, and then performs all actions (if any).
 
 Given either a static file or a template, it will attempt to render
 it and send it to C<< $context->res->body >>.
+
+=head2 PRIVATE METHODS
+
+=head3 _render_stash
+
+return a list of rendering data in template from exposed stash
 
 =head2 INHERITED METHODS
 
