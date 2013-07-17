@@ -142,6 +142,8 @@ sub run_tests {
             new( GET => 'http://localhost:3000/test_redirect_then_die' );
         ok( my $response = request($request), 'Request' );
         is( $response->code, 500, 'Should be internal server error');
+        is( + $response->redirects, 0, "No redirects happened");
+        is( $response->is_redirect, '', "we don't get a redirect response");
     }
     reset_stderr();
 }
